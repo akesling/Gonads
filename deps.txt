@@ -1,2 +1,3 @@
 # Fedora
-xorg-x11-server-devel
+xorg-x11-server-devel # Maybe not?
+libXinerama-devel
