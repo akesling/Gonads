@@ -1,5 +1,5 @@
 // Written by Ch. Tronche (http://tronche.lri.fr:8000/)
-// Copyright by the author. This is unmaintained, no-warranty free software. 
+// Copyright by the author. This is unmaintained, no-warranty free software.
 // Please use freely. It is appreciated (but by no means mandatory) to
 // acknowledge the author's contribution. Thank you.
 // Started on Thu Jun 26 23:29:03 1997
@@ -32,7 +32,7 @@ main()
       // Create the window
 
       Window w = XCreateSimpleWindow(dpy, DefaultRootWindow(dpy), 0, 0, 
-                     200, 100, 0, blackColor, blackColor);
+                     200, 100, 0, whiteColor, blackColor);
 
       // We want to get MapNotify events
 
