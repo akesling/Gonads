@@ -16,14 +16,15 @@ func main() {
     defer X.Close()
 
     // Replace existing window manager
-    wmName := fmt.Sprintf("WM_S%d", X.Conn().DefaultScreen)
+    wmName := fmt.Sprintf("WM_S%d", X.DefaultScreen)
     managerAtom, err := xproto.InternAtom(X, true, uint16(len(wmName)), wmName).Reply()
     if err != nil {
         log.Fatal(err)
     }
-    blankWindow = xproto.NewWindowId(X)
-    err := xproto.SetSelectionOwnerChecked(X, blankWindow, managerAtom, xproto.TimeCurrentTime).Check()
+    blankWindow, _ := xproto.NewWindowId(X)
+    err = xproto.SetSelectionOwnerChecked(X, blankWindow, managerAtom.Atom, xproto.TimeCurrentTime).Check()
     if err != nil {
+        fmt.Println("foo")
         log.Fatal(err)
     }
 
