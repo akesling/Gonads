@@ -15,14 +15,31 @@ func main() {
     }
     defer X.Close()
 
+    setup := xproto.Setup(X)
+    // Get the first screen
+    screen := setup.DefaultScreen(X)
+
     // Replace existing window manager
     wmName := fmt.Sprintf("WM_S%d", X.DefaultScreen)
     managerAtom, err := xproto.InternAtom(X, true, uint16(len(wmName)), wmName).Reply()
     if err != nil {
         log.Fatal(err)
     }
-    blankWindow, _ := xproto.NewWindowId(X)
-    err = xproto.SetSelectionOwnerChecked(X, blankWindow, managerAtom.Atom, xproto.TimeCurrentTime).Check()
+
+    fakeWindow, _ := xproto.NewWindowId(X)
+    xproto.CreateWindow(X,                  // Connection
+            screen.RootDepth,               // Depth
+            blankWindow,                    // Window Id
+            screen.Root,                    // Parent Window
+            -1000, -1000,                   // x, y
+            1, 1,                           // width, height
+            0,                              // border_width
+            xproto.WindowClassInputOutput,  // class
+            screen.RootVisual,              // visual
+            xproto.CwEventMask|xproto.CwOverrideRedirect,
+            []uint32{1, xproto.EventMaskPropertyChange})      // masks
+    xproto.MapWindow(X, fakeWindow)
+    err = xproto.SetSelectionOwnerChecked(X, fakeWindow, managerAtom.Atom, xproto.TimeCurrentTime).Check()
     if err != nil {
         fmt.Println("foo")
         log.Fatal(err)
@@ -31,10 +48,6 @@ func main() {
     arcs := []xproto.Arc{
         {10, 100, 60, 40, 0, 90 << 6},
         {90, 100, 55, 40, 0, 270 << 6}};
-
-    setup := xproto.Setup(X)
-    // Get the first screen
-    screen := setup.DefaultScreen(X)
 
     // Create black (foreground) graphic context
     foreground, _ := xproto.NewGcontextId(X)
