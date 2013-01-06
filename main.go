@@ -5,10 +5,11 @@ import (
     "log"
     "github.com/BurntSushi/xgb"
     "github.com/BurntSushi/xgb/xproto"
+    "util"
 )
 
 func main() {
-    X = xConnect()
+    X := xConnect()
     defer X.Close()
 
     setup := xproto.Setup(X)
