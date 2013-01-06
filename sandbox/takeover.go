@@ -29,7 +29,7 @@ func main() {
     fakeWindow, _ := xproto.NewWindowId(X)
     xproto.CreateWindow(X,                  // Connection
             screen.RootDepth,               // Depth
-            blankWindow,                    // Window Id
+            fakeWindow,                    // Window Id
             screen.Root,                    // Parent Window
             -1000, -1000,                   // x, y
             1, 1,                           // width, height
