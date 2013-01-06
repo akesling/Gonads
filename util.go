@@ -9,7 +9,7 @@ import (
 
 
 // Open the connection to the X server
-func xConnect() {
+func XConnect() *xgb.Conn {
     X, err := xgb.NewConn()
     if err != nil {
         log.Fatal(err)
