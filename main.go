@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-    X := XConnect()
+    X := xConnect()
     defer X.Close()
 
     setup := xproto.Setup(X)
